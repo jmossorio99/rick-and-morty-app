@@ -1,0 +1,8 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<div class="alert" [@alertState]="">
+  <p>{{message}}</p>
+  <div class="actions">
+    <button id="cancel" (click)="onCancel()">Cancel</button>
+    <button id="accept" (click)="onAccept()">Accept</button>
+  </div>
+</div>

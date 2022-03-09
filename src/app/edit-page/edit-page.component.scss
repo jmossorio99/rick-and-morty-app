@@ -1,0 +1,86 @@
+.edit-form {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);;
+  background-color: white;
+  color: #504c64;
+  border-radius: 20px;
+  padding: 30px 0;
+  margin: 40px auto;
+  height: 350px;
+  width: 750px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.form-container img {
+  height: 300px;
+  width: 300px;
+  border-radius: 20px;
+}
+
+.form-container form {
+  height: 200px;
+  width: 300px;
+  font-size: 15px;
+}
+
+.form-control {
+  padding: 2px 0;
+  display: flex;
+  flex-flow: column wrap;
+  margin-bottom: 2.5px;
+}
+
+input, select {
+  outline: 0;
+  border-width: 0 0 1px;
+  border-color: #504c64;
+  height: 20px;
+  font-size: 20px;
+  margin: 2.5px 0;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 15px;
+}
+
+.actions button {
+  height: 30px;
+  width: 100px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+#submit{
+  background-color: #504c64;
+  color: white;
+}
+
+#submit:disabled,
+#submit:disabled:hover
+{
+  background-color: rgba(91, 91, 101, 0.55);
+  color: white;
+  cursor: not-allowed;
+}
+
+#submit:hover
+{
+  background-color: #696583;
+  color: white;
+}
+
+#cancel {
+  background-color: #cccccc;
+  color: black;
+}
+
+#cancel:hover{
+  background-color: #d3d3d3;
+}

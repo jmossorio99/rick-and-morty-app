@@ -1,0 +1,30 @@
+<app-alert *ngIf="showAlert" message="Are you sure you want to delete this character?" (close)="onClose($event)"></app-alert>
+<div class="home-page">
+  <div class="error" *ngIf="error && !loading">
+    <p>An error occurred.</p>
+  </div>
+  <div class="loading" *ngIf="!error && loading">
+    <app-spinner></app-spinner>
+  </div>
+  <div *ngIf="!error && !loading">
+    <div class="filters">
+      <i class="fa-solid fa-filter"></i>
+      <h1>Filters:</h1>
+      <div class="name-filter">🔍<input #nameFilterRef type="text" placeholder="Search by name" [(ngModel)]="nameFilter"></div>
+      <select name="status" id="status" [(ngModel)]="statusFilter" (change)="onFilter()">
+        <option disabled selected>Status</option>
+        <option *ngFor="let status of statusFilterOptions" value="{{status.value}}">{{status.viewValue}}</option>
+      </select>
+      <select name="gender" id="gender" [(ngModel)]="genderFilter" (change)="onFilter()">
+        <option disabled selected>Gender</option>
+        <option *ngFor="let gender of genderFilterOptions" value="{{gender.value}}">{{gender.viewValue}}</option>
+      </select>
+    </div>
+    <div class="characters">
+      <app-character-card *ngFor="let character of characters" (onDelete)="onDelete($event)"
+                          [character]="character"></app-character-card>
+    </div>
+  </div>
+</div>
+
+

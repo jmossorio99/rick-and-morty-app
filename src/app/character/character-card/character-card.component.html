@@ -1,0 +1,48 @@
+<div
+  class="character-card"
+  [ngStyle]="{
+    backgroundColor: character.status === 'Alive' ? '#504c64' : '#707070'
+  }"
+>
+  <div class="character-info">
+    <span class="item">
+      <img
+        class="item-img"
+        [src]="character.imageURL"
+        alt="character portrait"
+      />
+    </span>
+    <div class="details">
+      <h3>{{ character.name }}</h3>
+      <p>{{ getStatusCircle() }} {{ character.status }}</p>
+      <div class="entries">
+        <div class="left-column">
+          <p>Species:</p>
+          <p>Gender:</p>
+          <p>Creation Date:</p>
+          <p>First seen in:</p>
+        </div>
+        <div class="right-column">
+          <p>{{ character.species }}</p>
+          <p>{{ character.gender }}</p>
+          <p>
+            {{
+              character.created.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+              })
+            }}
+          </p>
+          <p>{{ character.firstEpisode }}</p>
+          <!--            <p>Pilot</p>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="character-actions">
+    <button [ngStyle]="getButtonStyles()" (click)="onActionClicked()">
+      {{ character.status === "Dead" ? "Delete" : "Edit" }}
+    </button>
+  </div>
+</div>
