@@ -6,60 +6,54 @@ import {
   OnInit,
   QueryList,
   ViewChild,
-  ViewChildren
+  ViewChildren,
 } from '@angular/core';
-import {Store} from "@ngrx/store";
-import * as fromApp from "../store/app.reducer";
-import * as CharacterActions from "../store/character/character.actions";
-import {Character} from "../model/character.model";
-import {debounceTime, fromEvent, Subscription} from "rxjs";
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as CharacterActions from '../store/character/character.actions';
+import { Character } from '../model/character.model';
+import { debounceTime, fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
-  // @ts-ignore
-  @ViewChildren('nameFilterRef') nameFilterRef: QueryList;
-  // @ts-ignore
+  @ViewChildren('nameFilterRef') nameFilterRef: QueryList<any>;
   nameFilterSub: Subscription;
-  // @ts-ignore
   error: boolean;
-  // @ts-ignore
   loading: boolean;
-  // @ts-ignore
   characters: Character[];
-  // @ts-ignore
   characterSub: Subscription;
-  // @ts-ignore
   idToDelete: number;
   showAlert: boolean = false;
   nameFilter = '';
   statusFilter = 'Status';
   statusFilterOptions = [
-    {value: '', viewValue: 'All'},
-    {value: 'Alive', viewValue: 'Alive'},
-    {value: 'Dead', viewValue: 'Dead'},
-    {value: 'unknown', viewValue: 'unknown'}
+    { value: '', viewValue: 'All' },
+    { value: 'Alive', viewValue: 'Alive' },
+    { value: 'Dead', viewValue: 'Dead' },
+    { value: 'unknown', viewValue: 'unknown' },
   ];
   genderFilter = 'Gender';
   genderFilterOptions = [
-    {value: '', viewValue: 'All'},
-    {value: 'Female', viewValue: 'Female'},
-    {value: 'Male', viewValue: 'Male'},
-    {value: 'Genderless', viewValue: 'Genderless'},
-    {value: 'Unknown', viewValue: 'Unknown'},
-  ]
-  constructor(private store: Store<fromApp.AppState>) {
-  }
+    { value: '', viewValue: 'All' },
+    { value: 'Female', viewValue: 'Female' },
+    { value: 'Male', viewValue: 'Male' },
+    { value: 'Genderless', viewValue: 'Genderless' },
+    { value: 'Unknown', viewValue: 'Unknown' },
+  ];
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.characterSub = this.store.select('character').subscribe(characterState => {
-      this.error = characterState.error;
-      this.loading = characterState.loading;
-      this.characters = characterState.filteredCharacters;
-    });
+    this.characterSub = this.store
+      .select('character')
+      .subscribe((characterState) => {
+        this.error = characterState.error;
+        this.loading = characterState.loading;
+        this.characters = characterState.filteredCharacters;
+      });
     if (this.characters.length === 0) {
       this.store.dispatch(new CharacterActions.CharactersLoading());
     }
@@ -78,18 +72,26 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.idToDelete = id;
   }
 
-  onFilter(){
+  onFilter() {
     const filters = {
       nameFilter: this.nameFilter,
-      statusFilter: this.statusFilter !== 'Status' && this.statusFilter !== '' ? this.statusFilter : null,
-      genderFilter: this.genderFilter !== 'Gender' && this.genderFilter !== '' ? this.genderFilter : null,
-    }
+      statusFilter:
+        this.statusFilter !== 'Status' && this.statusFilter !== ''
+          ? this.statusFilter
+          : null,
+      genderFilter:
+        this.genderFilter !== 'Gender' && this.genderFilter !== ''
+          ? this.genderFilter
+          : null,
+    };
     this.store.dispatch(new CharacterActions.FilterCharacters(filters));
   }
 
   onClose(choice: string) {
     if (choice === 'accept' && this.idToDelete) {
-      this.store.dispatch(new CharacterActions.DeleteCharacter(this.idToDelete));
+      this.store.dispatch(
+        new CharacterActions.DeleteCharacter(this.idToDelete)
+      );
     }
     this.showAlert = false;
   }
@@ -102,5 +104,4 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
       this.characterSub.unsubscribe();
     }
   }
-
 }
